@@ -1,13 +1,15 @@
 import './tailwind.css'
 import { useState, useEffect } from 'react';
 import { url } from './api/api';
-import { chartData } from "./charts/ChartData";
+import { chartData } from "./components/charts/ChartData";
 
 import * as d3 from "d3-scale-chromatic";
 import CustomSelect from './components/form/CustomSelect';
-import Widget from './widgets/Widget';
+import Widget from './components/widgets/Widget';
 import MainHeader from './components/UI/MainHeader';
 import Container from './components/Container';
+import BarChart from './components/charts/BarChart';
+import DoughnutChart from './components/charts/DoughnutChart';
 
 function App() {
 
@@ -91,7 +93,24 @@ function App() {
       selectedValue: event.target.value
     }))
   }
-  const test = chartData({
+
+  const bData = chartData({
+    labels: ["organic_source", "refrerral_source", "direct_source"],
+    data: [
+      data.organicSource,
+      data.referralSource,
+      data.directSource,
+    ],
+    colorRangeInfo: {
+      colorStart: 0,
+      colorEnd: 1,
+      useEndAsStart: true,
+    },
+    scale: d3.interpolateCool,
+    dataLabel: "data for doughnut chart",
+  });
+
+  const dData = chartData({
     labels: ["Sessions", "Average session time", "Pages per session"],
     data: [
       data.sessionsPerUser,
@@ -114,7 +133,7 @@ function App() {
       <Container className="pt-5">
         {
           initialData.items.length === 0 ? (
-            <MainHeader header="Fetching Data" />
+            <MainHeader header="Fetching Data..." />
           ) : (
             <div>
 
@@ -129,6 +148,10 @@ function App() {
                 <Widget data={data} />
               </div>
 
+              <div className='flex flex-wrap justify-around items-center w-full'>
+                <BarChart data={bData} width={100} height={50} />
+                <DoughnutChart data={dData} width={100} height={50} />
+              </div>
             </div>
           )
         }
