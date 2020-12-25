@@ -106,7 +106,7 @@ function App() {
       colorEnd: 1,
       useEndAsStart: true,
     },
-    scale: d3.interpolateCool,
+    scale: d3.interpolateViridis,
     dataLabel: "data for doughnut chart",
   });
 
@@ -122,7 +122,7 @@ function App() {
       colorEnd: 1,
       useEndAsStart: true,
     },
-    scale: d3.interpolateCool,
+    scale: d3.interpolateViridis,
     dataLabel: "data for doughnut chart",
   });
   
